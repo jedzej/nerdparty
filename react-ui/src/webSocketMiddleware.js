@@ -34,7 +34,7 @@ export const webSocketReducer = (state = DEFAULT_STATE, action) => {
 };
 
 export const createWebSocketMiddleWare = url => store => {
-
+  console.log(url)
   var ws = null;
 
   return next => action => {

@@ -123,7 +123,7 @@ class AppLayout extends React.Component {
               </Drawer>
             </Hidden> : null
           }
-          {hasDrawer ?
+          {hasDrawer &&
             <Hidden smDown implementation="css">
               <Drawer
                 type="permanent"
@@ -134,7 +134,7 @@ class AppLayout extends React.Component {
               >
                 {nodes['drawer']}
               </Drawer>
-            </Hidden> : null
+            </Hidden>
           }
           <main className={classes.content}>
             {nodes['main']}

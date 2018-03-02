@@ -59,7 +59,7 @@ export default history => createStore(
   rootReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   applyMiddleware(
-    createWebSocketMiddleWare('ws://' + window.location.hostname),
+    createWebSocketMiddleWare(window.location.origin.replace(/http/, "ws").replace('3000','5000')),
     createEpicMiddleware(rootEpic),
     routerMiddleware(history)
   )
