@@ -2,7 +2,7 @@ const sapi = require('../../sapi');
 const tools = require('../../modules/tools');
 const check = require('../../modules/check');
 const appService = require('../../modules/app/service');
-const MANIFEST = require('../../../src/apps/rsp/manifest')
+const MANIFEST = require('../../../react-ui/src/apps/rsp/manifest')
 const rejectionAction = tools.rejectionAction
 
 const { MOVE, DUEL_TABLE, RESULT, STAGE, ACTION } = MANIFEST.CONSTS;

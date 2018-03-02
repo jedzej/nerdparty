@@ -3,8 +3,8 @@ const sapi = require('../../sapi');
 const tools = require('../../modules/tools');
 const check = require('../../modules/check');
 const appService = require('../../modules/app/service');
-const MANIFEST = require('../../../src/apps/avaclone/manifest');
-const ac = require('../../../src/apps/avaclone/acutils');
+const MANIFEST = require('../../../react-ui/src/apps/avaclone/manifest');
+const ac = require('../../../react-ui/src/apps/avaclone/acutils');
 const rejectionAction = tools.rejectionAction
 
 const { STAGE, CHAR, ACTION, TEAM, QUEST_STAGE, QUEST_MAP, LOYALITY_MAP } = MANIFEST.CONSTS;
