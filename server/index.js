@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
+const http = require("http")
 
 const sapi = require('./sapi');
 const dbconfig = require('./dbconfig');
@@ -9,7 +10,7 @@ const app2sapi = require('./app2sapi')
 const appService = require('./modules/app/service')
 
 const PORT = process.env.PORT || 5000;
-
+console.log("STARTUJEMY")
 
 const apps = [
   './apps/rsp',
@@ -19,51 +20,34 @@ const apps = [
 ]
 
 
-// Multi-process to utilize all CPU cores.
-if (cluster.isMaster) {
-  console.error(`Node cluster master ${process.pid} is running`);
+const app = express();
 
-  // Fork workers.
-  for (let i = 0; i < numCPUs; i++) {
-    cluster.fork();
-  }
+// Priority serve any static files.
+app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
 
-  cluster.on('exit', (worker, code, signal) => {
-    console.error(`Node cluster worker ${worker.process.pid} exited: code ${code}, signal ${signal}`);
-  });
+// All remaining requests return the React app, so it can handle routing.
+app.get('*', function (request, response) {
+  response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
+});
 
-} else {
-  const app = express();
+const server = http.createServer(app);
 
-  // Priority serve any static files.
-  app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
+server.listen(PORT)
 
-  // Answer API requests.
-  app.get('/api', function (req, res) {
-    res.set('Content-Type', 'application/json');
-    res.send('{"message":"Hello from the custom server!"}');
-  });
+/*app.listen(PORT, function () {
+  console.error(`Node cluster worker ${process.pid}: listening on port ${PORT}`);
+});*/
 
-  // All remaining requests return the React app, so it can handle routing.
-  app.get('*', function(request, response) {
-    response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
-  });
 
-  app.listen(PORT, function () {
-    console.error(`Node cluster worker ${process.pid}: listening on port ${PORT}`);
-  });
-  
-  
-  const rootHandlers = sapi.combineHandlers(
-    require('./modules/hello/handlers'),
-    require('./modules/user/handlers'),
-    require('./modules/lobby/handlers'),
-    require('./modules/observer/handlers'),
-    require('./modules/app/handlers'),
-    ...apps.map(app => app2sapi(app))
-  );
+const rootHandlers = sapi.combineHandlers(
+  require('./modules/hello/handlers'),
+  require('./modules/user/handlers'),
+  require('./modules/lobby/handlers'),
+  require('./modules/observer/handlers'),
+  require('./modules/app/handlers'),
+  ...apps.map(app => app2sapi(app))
+);
 
-  dbconfig.connect().then(client => {
-    sapi.start(PORT, rootHandlers, dbconfig.db(client));
-  });
-}
+dbconfig.connect().then(client => {
+  sapi.start(server, rootHandlers, dbconfig.db(client));
+}).catch(err => console.log(err));

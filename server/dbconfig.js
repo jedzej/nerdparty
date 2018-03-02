@@ -1,8 +1,8 @@
 const MongoClient = require('mongodb').MongoClient;
 
 var env = {
-  url: "mongodb://localhost:27017",
-  dbName: "ggPlatform"
+  url: "mongodb://nerdparty:nerdparty@ds161136.mlab.com:61136/",
+  dbName: "nerdparty"
 }
 
 const connect = () => {

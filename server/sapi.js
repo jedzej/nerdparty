@@ -171,10 +171,11 @@ function onConnection(db) {
 }
 
 
-const start = (port, handlers, db) => {
+const start = (httpServer, handlers, db) => {
+  Console.log("STARTING")
   if (server === null) {
     new Promise((resolve, reject) => {
-      server = new WebSocket.Server({ port });
+      server = new WebSocket.Server({ server: httpServer });
       handlers.forEach(handler => {
         handlersList.push(handler);
         debug.handlers("Registering handler: " + handler.action)
