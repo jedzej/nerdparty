@@ -172,7 +172,7 @@ function onConnection(db) {
 
 
 const start = (httpServer, handlers, db) => {
-  Console.log("STARTING")
+  console.log("STARTING")
   if (server === null) {
     new Promise((resolve, reject) => {
       server = new WebSocket.Server({ server: httpServer });
