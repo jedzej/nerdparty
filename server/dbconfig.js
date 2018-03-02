@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 
 var env = {
-  url: "mongodb://nerdparty:nerdparty@ds161136.mlab.com:61136/",
+  url: "mongodb://nerdparty:nerdparty@ds161136.mlab.com:61136/nerdparty",
   dbName: "nerdparty"
 }
 
