@@ -6,7 +6,8 @@
     "node": "8.9.x"
   },
   "scripts": {
-    "start": "set DEBUG=*,-sapi:data&&node server",
+    "start": "node server",
+    "dev": "heroku local -f Procfile_dev",
     "heroku-postbuild": "cd react-ui/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "cacheDirectories": [
@@ -15,21 +16,14 @@
   ],
   "dependencies": {
     "express": "^4.14.1",
-    "ws": "^3.3.3",
-    "mongodb": "^3.0.1",
-    "async-lock": "^1.1.0",
+    "ws": "~3.3.3",
+    "mongodb": "~3.0.1",
+    "async-lock": "~1.1.0",
     "lodash": "^4.17.4"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mars/heroku-cra-node.git"
+    "url": "https://github.com/jedzej/nerdparty.git"
   },
-  "keywords": [
-    "node",
-    "heroku",
-    "create-react-app",
-    "react"
-  ],
-  "license": "MIT",
   "devDependencies": {}
 }

@@ -1,13 +1,8 @@
 const MongoClient = require('mongodb').MongoClient;
 
-var env = {
-  url: "mongodb://nerdparty:nerdparty@ds161136.mlab.com:61136/nerdparty",
-  dbName: "nerdparty"
-}
-
 const connect = () => {
   return new Promise((resolve, reject) => {
-    MongoClient.connect(env.url, function (err, client) {
+    MongoClient.connect(process.env.DB_URL, function (err, client) {
       if (err) {
         reject(err);
       } else {
@@ -18,7 +13,7 @@ const connect = () => {
 }
 
 const db = (client) => {
-  return client.db(env.dbName);
+  return client.db(process.env.DB_NAME);
 }
 
 
@@ -36,17 +31,8 @@ const withDb = (promiseCreator) => {
     });
 }
 
-const setEnv = (envParams) => {
-  env = {
-    ...env,
-    ...envParams
-  };
-}
-
 
 module.exports = {
-  setEnv: setEnv,
-  env: env,
   connect: connect,
   db: db,
   withDb: withDb

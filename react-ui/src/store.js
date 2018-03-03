@@ -51,15 +51,17 @@ const rootReducer = combineReducers({
       map[app.MANIFEST.NAME.toLowerCase()] = app.reducer;
       return map;
     }, {})
-
 });
 
+const hostname = process.env.REACT_APP_WEBSOCKET_HOSTNAME || window.location.hostname;
+const port = process.env.REACT_APP_WEBSOCKET_PORT || window.location.port;
+const protocol = window.location.protocol === "http:" ? "ws:" : "wss";
 
 export default history => createStore(
   rootReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   applyMiddleware(
-    createWebSocketMiddleWare(window.location.origin.replace(/http/, "ws").replace('3000','5000')),
+    createWebSocketMiddleWare(protocol + '//' + hostname + ':' + port + "/"),
     createEpicMiddleware(rootEpic),
     routerMiddleware(history)
   )
