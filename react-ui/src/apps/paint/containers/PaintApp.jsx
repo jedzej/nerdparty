@@ -144,7 +144,6 @@ class PaintApp extends React.Component {
       for (let i = this.props.paint.shapes.length - 1; i >= 0; i--) {
         let shape = this.props.paint.shapes[i];
         if (pointWithinShape(path[0], shape.path)) {
-          console.log(this.state)
           if (this.state.fillRequest) {
             clearTimeout(this.state.fillRequest.timeout);
             this.props.undo();
@@ -153,7 +152,6 @@ class PaintApp extends React.Component {
             dontSketch = true;
           }
           else {
-            console.log('settimeot')
             this.setState({
               fillRequest: {
                 timestamp: shape.timestamp,
@@ -284,14 +282,11 @@ class PaintApp extends React.Component {
 }
 
 
-const mapStateToProps = (state) => {
-  console.log(state)
-  return {
-    paint: state.paint,
-    lobby: state.lobby,
-    user: state.user
-  };
-};
+const mapStateToProps = (state) => ({
+  paint: state.paint,
+  lobby: state.lobby,
+  user: state.user
+});
 
 const mapDispatchToProps = (dispatch) => ({
   sketch: (path, color, timestamp) => dispatch(sketch(path, color, timestamp)),

@@ -31,7 +31,6 @@ const styles = theme => ({
 
 const getMatch = (rspState, lobbyState, cond) => {
   var match = cond(rspState.player1) ? rspState.player1 : rspState.player2;
-  console.log('match', match, lobbyState.members)
   return {
     ...match,
     ...lobbyState.members.find(m => m._id === match._id)
@@ -41,10 +40,7 @@ const getMatch = (rspState, lobbyState, cond) => {
 const getMe = (rspState, lobbyState, userState) => getMatch(
   rspState,
   lobbyState,
-  player => {
-    console.log("getMe", player, userState)
-    return player._id === userState._id;
-  }
+  player => player._id === userState._id
 )
 
 const getOpponent = (rspState, lobbyState, userState) => getMatch(
@@ -82,7 +78,7 @@ class RspApp extends React.Component {
       [RESULT.DEFEAT]: opponent,
       [RESULT.TIE]: null
     })[result];
-    console.log('winner', winner)
+
     return (
       <div>
         <PointsTable me={me} opponent={opponent} roundLimit={this.props.rsp.roundLimit} />
@@ -93,13 +89,11 @@ class RspApp extends React.Component {
             onTerminate={() => this.props.rspTerminate()} /> :
           <CompleteSectionObserver winner={winner} />
         }
-
       </div>
     );
   }
 
   render() {
-    console.log(this.props)
     try {
       const me = getMe(this.props.rsp, this.props.lobby, this.props.user);
       const opponent = getOpponent(this.props.rsp, this.props.lobby, this.props.user);
@@ -119,14 +113,11 @@ class RspApp extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log(state)
-  return {
-    rsp: state.app.RSP.store,
-    lobby: state.lobby,
-    user: state.user
-  };
-};
+const mapStateToProps = (state) => ({
+  rsp: state.app.RSP.store,
+  lobby: state.lobby,
+  user: state.user
+});
 
 const mapDispatchToProps = (dispatch) => ({
   rspMove: (variant) => dispatch(move(variant)),

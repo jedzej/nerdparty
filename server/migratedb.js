@@ -9,7 +9,5 @@ dbconfig.connect()
       .then(() => user.dbReset(dbconfig.db(client)))
       .then(() => lobby.dbReset(dbconfig.db(client)))
       .then(() => app.dbReset(dbconfig.db(client)))
-      .then(() => {
-        client.close()
-      });
+      .then(() => client.close());
   })

@@ -34,7 +34,6 @@ export const webSocketReducer = (state = DEFAULT_STATE, action) => {
 };
 
 export const createWebSocketMiddleWare = url => store => {
-  console.log(url)
   var ws = null;
 
   return next => action => {
@@ -52,14 +51,12 @@ export const createWebSocketMiddleWare = url => store => {
           }
 
           ws.onerror = (event) => {
-            console.log(ws)
             store.dispatch({
               type: "WEBSOCKET_ERROR"
             });
           };
 
           ws.onclose = (event) => {
-            console.log(ws)
             store.dispatch({
               type: "WEBSOCKET_CLOSED",
               payload: event

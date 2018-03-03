@@ -150,7 +150,6 @@ const app2sapi = (appPath) => {
             debug('No context for ' + app.NAME + '\n' + err.stack)
           })
           .then(() => {
-            //console.log("APPDATA:", ctx.appContext)
             if (ctx.appContext.exists || action.type === "APP_START_HOOK" || app.ALWAYS_ON)
               return appHandler(action, ctx.appContext)
           })

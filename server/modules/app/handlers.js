@@ -57,11 +57,9 @@ const handlers = {
         type: "APP_TERMINATE_HOOK",
         payload: { name: action.payload.name }
       }, ws, db))
-      .then((results) => {
-        console.log(results)
-        return appService
-          .destroyAppdata(db, ws.store.lobbyId, action.payload.name)
-      })
+      .then(results =>
+        appService.destroyAppdata(db, ws.store.lobbyId, action.payload.name)
+      )
       .then(() => {
         ws.sendAction("APP_TERMINATE_FULFILLED");
         return app2sapi.doAppUpdate(db, ctx.lobby._id);

@@ -106,20 +106,8 @@ const inject = (action, ws, db) => {
       handler => handler.handler(action, ws, db)
     ),
     err => { ws.debug.handlers(err.stack); throw err; }
-  )/*/
-  return Promise.all(
-    matchedHandlers.map(
-      handler => {
-        console.log('calling handler', handler);
-        return handler(action, ws, db);
-      }
-    )
-  ).catch(
-    err => {
-      ws.debug.handlers(err.stack);
-      throw err;
-    })*/
-}
+  )
+};
 
 
 function onConnection(db) {
@@ -172,7 +160,6 @@ function onConnection(db) {
 
 
 const start = (httpServer, handlers, db) => {
-  console.log("STARTING")
   if (server === null) {
     new Promise((resolve, reject) => {
       server = new WebSocket.Server({ server: httpServer });
@@ -203,13 +190,13 @@ const start = (httpServer, handlers, db) => {
       }
     });
   }
-}
+};
 
 const stop = (cb) => {
   if (server !== null) {
     server.close(cb)
   }
-}
+};
 
 
 const getClients = filter => {
@@ -217,7 +204,7 @@ const getClients = filter => {
   if (filter)
     members = members.filter(filter);
   return members;
-}
+};
 
 
 module.exports = {
@@ -227,4 +214,4 @@ module.exports = {
   SapiError,
   getClients,
   inject
-}
+};

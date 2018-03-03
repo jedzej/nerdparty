@@ -78,9 +78,6 @@ class StageQuestVotingView extends React.Component {
     }
 
     const swap = Math.sin(parseInt(currentUser._id.substring(0, 10), 16) / quest.number) > 0;
-    console.log(currentUser._id.substring(0, 10))
-    console.log(parseInt(currentUser._id.substring(0, 10), 16))
-    console.log(quest.number)
 
     return (
       <StageWrapper>

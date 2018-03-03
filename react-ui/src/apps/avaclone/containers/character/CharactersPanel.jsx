@@ -38,7 +38,6 @@ class CharactersPanel extends React.Component {
   handleClick(event) {
     this.setState({ expose: true, progress: 0 });
     this.interval = setInterval(() => this.handleInterval(), 50)
-    console.log('clicked')
   }
 
   handleInterval() {

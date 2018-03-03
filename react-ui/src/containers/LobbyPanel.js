@@ -19,33 +19,30 @@ import { message } from '../logic/chat/actions'
 import ChatBox from './ChatBox';
 
 
-const styles = theme => {
-  console.log(theme);
-  return {
-    header: {
-      flex: '0 1 auto'
-    },
-    container: {
-      height: '100%',
-      display: 'flex',
-      flexFlow: 'column',
-      flex: '0 1 auto',
-    },
-    chatContainer: {
-      flex: '1 1 10px',
-      overflowY: 'hidden'
-    },
-    headline: {
-      backgroundColor: theme.palette.primary['300'],
-      color: theme.palette.getContrastText(theme.palette.primary['700'])
-    },
-    headIcon: {
-      width: '24px',
-      height: '24px',
-      padding: theme.spacing.unit
-    }
+const styles = theme => ({
+  header: {
+    flex: '0 1 auto'
+  },
+  container: {
+    height: '100%',
+    display: 'flex',
+    flexFlow: 'column',
+    flex: '0 1 auto',
+  },
+  chatContainer: {
+    flex: '1 1 10px',
+    overflowY: 'hidden'
+  },
+  headline: {
+    backgroundColor: theme.palette.primary['300'],
+    color: theme.palette.getContrastText(theme.palette.primary['700'])
+  },
+  headIcon: {
+    width: '24px',
+    height: '24px',
+    padding: theme.spacing.unit
   }
-};
+});
 
 class LobbyList extends React.Component {
 

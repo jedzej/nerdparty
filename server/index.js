@@ -10,14 +10,14 @@ const app2sapi = require('./app2sapi')
 const appService = require('./modules/app/service')
 
 const PORT = process.env.PORT || 5000;
-console.log("STARTUJEMY")
+
 
 const apps = [
   './apps/rsp',
   './apps/chat',
   './apps/paint',
   './apps/avaclone'
-]
+];
 
 
 const app = express();
@@ -32,11 +32,7 @@ app.get('*', function (request, response) {
 
 const server = http.createServer(app);
 
-server.listen(PORT)
-
-/*app.listen(PORT, function () {
-  console.error(`Node cluster worker ${process.pid}: listening on port ${PORT}`);
-});*/
+server.listen(PORT);
 
 
 const rootHandlers = sapi.combineHandlers(
@@ -48,6 +44,8 @@ const rootHandlers = sapi.combineHandlers(
   ...apps.map(app => app2sapi(app))
 );
 
-dbconfig.connect().then(client => {
-  sapi.start(server, rootHandlers, dbconfig.db(client));
-}).catch(err => console.log(err));
+dbconfig.connect()
+  .then(client => {
+    sapi.start(server, rootHandlers, dbconfig.db(client));
+  })
+  .catch(err => console.log(err));

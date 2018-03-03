@@ -10,11 +10,10 @@ class AppSelector extends Component {
 
   render() {
     const { props } = this;
-    console.log(applications)
     return (
       <Grid container spacing={0}>
         {Object.values(applications).map(app => (
-          <Grid item key={app.MANIFEST.NAME} style={{padding:12}}>
+          <Grid item key={app.MANIFEST.NAME} style={{ padding: 12 }}>
             <app.CARD
               lobby={props.lobby}
               user={props.user}
@@ -27,12 +26,10 @@ class AppSelector extends Component {
 }
 
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-    lobby: state.lobby
-  };
-};
+const mapStateToProps = (state) => ({
+  user: state.user,
+  lobby: state.lobby
+});
 
 const mapDispatchToProps = (dispatch) => ({
   start: (name) => {
