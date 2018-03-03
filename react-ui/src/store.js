@@ -54,8 +54,8 @@ const rootReducer = combineReducers({
 });
 
 const hostname = process.env.REACT_APP_WEBSOCKET_HOSTNAME || window.location.hostname;
-const port = process.env.REACT_APP_WEBSOCKET_PORT || window.location.port;
-const protocol = window.location.protocol === "http:" ? "ws:" : "wss";
+const port = process.env.REACT_APP_WEBSOCKET_PORT || window.location.port || "80";
+const protocol = window.location.protocol === "http:" ? "ws:" : "wss:";
 
 export default history => createStore(
   rootReducer,
