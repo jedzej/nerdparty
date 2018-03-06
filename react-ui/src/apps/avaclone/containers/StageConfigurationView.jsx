@@ -8,72 +8,42 @@ import { leave } from '../../../logic/lobby/actions';
 import { start } from '../actions';
 
 import MANIFEST from '../manifest'
-import Button from 'material-ui/Button/Button';
+import Button from 'material-ui/Button';
 import SpecialCharactersSelector from './configuration/SpecialCharactersSelector'
-import Paper from 'material-ui/Paper/Paper';
+import Paper from 'material-ui/Paper';
+import Divider from 'material-ui/Divider';
 
 
-const styles = theme => {
-  console.log(theme); return ({
-    root: {
-      flexGrow: 1,
-    },
-    paper: {
-      padding: theme.spacing.unit * 2,
-      height: '100%',
-    },
-    control: {
-      padding: theme.spacing.unit * 2,
-    },
-    headline: {
-      paddingBottom: theme.spacing.unit * 2
-    },
-    settingsButton: {
-      position: 'absolute',
-      top: '10px',
-      right: '10px'
-    },
-    undoButton: {
-      position: 'absolute',
-      bottom: '10px',
-      right: '50px'
-    },
-    undoButtonDisabled: {
-      position: 'absolute',
-      color: '#CCC',
-      bottom: '10px',
-      right: '50px'
-    },
-    clearButton: {
-      position: 'absolute',
-      bottom: '10px',
-      right: '90px'
-    },
-    paletteButton: {
-      position: 'absolute',
-      bottom: '10px',
-      right: '10px'
-    },
-    canvasContainer: {
-      width: '100%',
-      height: '100%',
-      overflow: 'hidden',
-      backgroundColor: '#fff'
-    }
-  })
-};
+const styles = theme => ({
+  paper: {
+    padding: theme.spacing.unit * 2,
+    margin: theme.spacing.unit * 2,
+    textAlign: 'center'
+  },
+  divider: {
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit
+  }
+});
 
 
 class StageConfigurationView extends React.Component {
 
   render() {
+    const { classes } = this.props;
     return (
-      <Paper>
-        <SpecialCharactersSelector />
-        <Button
-          onClick={() => this.props.start()}
-        >START</Button>
-      </Paper>
+      <div style={{ margin: 0, height: '100%' }}>
+        <div style={{ margin: 0, overflow: 'auto', height: 'calc(100% - 56px)' }}>
+          <Paper className={classes.paper}>
+
+            <SpecialCharactersSelector />
+            <Divider />
+            <Button
+              onClick={() => this.props.start()}
+            >START</Button>
+          </Paper>
+        </div>
+      </div>
     );
   }
 }

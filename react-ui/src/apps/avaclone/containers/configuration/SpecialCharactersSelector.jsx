@@ -8,60 +8,61 @@ import MANIFEST from '../../manifest'
 import Checkbox from 'material-ui/Checkbox';
 import FormControlLabel from 'material-ui/Form/FormControlLabel';
 import FormGroup from 'material-ui/Form/FormGroup';
+import Person from 'material-ui-icons/Person';
+import PersonOutline from 'material-ui-icons/PersonOutline';
 import _ from 'lodash';
 import Grid from 'material-ui/Grid/Grid';
 
 const { TEAM } = MANIFEST.CONSTS;
 
-const styles = theme => {
-  console.log(theme); return ({
-    root: {
-      flexGrow: 1,
-    },
-    paper: {
-      padding: theme.spacing.unit * 2,
-      height: '100%',
-    },
-    control: {
-      padding: theme.spacing.unit * 2,
-    },
-    headline: {
-      paddingBottom: theme.spacing.unit * 2
-    },
-    settingsButton: {
-      position: 'absolute',
-      top: '10px',
-      right: '10px'
-    },
-    undoButton: {
-      position: 'absolute',
-      bottom: '10px',
-      right: '50px'
-    },
-    undoButtonDisabled: {
-      position: 'absolute',
-      color: '#CCC',
-      bottom: '10px',
-      right: '50px'
-    },
-    clearButton: {
-      position: 'absolute',
-      bottom: '10px',
-      right: '90px'
-    },
-    paletteButton: {
-      position: 'absolute',
-      bottom: '10px',
-      right: '10px'
-    },
-    canvasContainer: {
-      width: '100%',
-      height: '100%',
-      overflow: 'hidden',
-      backgroundColor: '#fff'
-    }
-  })
-};
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    height: '100%',
+  },
+  control: {
+    padding: theme.spacing.unit * 2,
+  },
+  headline: {
+    paddingBottom: theme.spacing.unit * 2
+  },
+  settingsButton: {
+    position: 'absolute',
+    top: '10px',
+    right: '10px'
+  },
+  undoButton: {
+    position: 'absolute',
+    bottom: '10px',
+    right: '50px'
+  },
+  undoButtonDisabled: {
+    position: 'absolute',
+    color: '#CCC',
+    bottom: '10px',
+    right: '50px'
+  },
+  clearButton: {
+    position: 'absolute',
+    bottom: '10px',
+    right: '90px'
+  },
+  paletteButton: {
+    position: 'absolute',
+    bottom: '10px',
+    right: '10px'
+  },
+  canvasContainer: {
+    width: '100%',
+    height: '100%',
+    overflow: 'hidden',
+    backgroundColor: '#fff'
+  }
+});
+
 
 class SpecialCharactersSelector extends React.Component {
 
@@ -92,6 +93,7 @@ class SpecialCharactersSelector extends React.Component {
     return (
       <Grid container>
         <Grid item>
+          <Person />
           <FormGroup>
             {specialChars
               .filter(char => TEAM.EVIL.includes(char))
@@ -99,6 +101,7 @@ class SpecialCharactersSelector extends React.Component {
           </FormGroup>
         </Grid>
         <Grid item>
+          <PersonOutline />
           <FormGroup>
             {specialChars
               .filter(char => TEAM.GOOD.includes(char))

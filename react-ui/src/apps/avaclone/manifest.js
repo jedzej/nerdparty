@@ -65,15 +65,31 @@ const goodVisibilityMap = {
 
 const VISIBILITY_MAP = {
   [CHAR.EVIL]: evilVisibilityMap,
-  [CHAR.MORDRED]: evilVisibilityMap,
-  [CHAR.MORGANA]: evilVisibilityMap,
-  [CHAR.ASSASSIN]: evilVisibilityMap,
-  [CHAR.OBERON]: goodVisibilityMap,
-
+  [CHAR.MORDRED]: {
+    ...evilVisibilityMap,
+    [CHAR.MORDRED]: CHAR.MORDRED,
+  },
+  [CHAR.MORGANA]: {
+    ...evilVisibilityMap,
+    [CHAR.MORGANA]: CHAR.MORGANA,
+  },
+  [CHAR.ASSASSIN]: {
+    ...evilVisibilityMap,
+    [CHAR.ASSASSIN]: CHAR.ASSASSIN,
+  },
+  [CHAR.OBERON]: {
+    ...goodVisibilityMap,
+    [CHAR.OBERON]: CHAR.OBERON,
+  },
   [CHAR.GOOD]: goodVisibilityMap,
-  [CHAR.MERLIN]: evilVisibilityMap,
+  [CHAR.MERLIN]: {
+    ...evilVisibilityMap,
+    [CHAR.MERLIN]: CHAR.MERLIN,
+    [CHAR.MORDRED]: CHAR.GOOD,
+  },
   [CHAR.PERCIVAL]: {
     ...goodVisibilityMap,
+    [CHAR.PERCIVAL]: CHAR.PERCIVAL,
     [CHAR.MERLIN]: CHAR.MERLIN,
     [CHAR.MORGANA]: CHAR.MERLIN,
   }
@@ -143,12 +159,12 @@ module.exports = {
       questVotingLimit: 0,
       squadProposalVotingLimit: 0,
       specialChars: {
-        [CHAR.ASSASSIN]:false,
-        [CHAR.MORGANA]:false,
-        [CHAR.MERLIN]:false,
-        [CHAR.MORDRED]:false,
-        [CHAR.PERCIVAL]:false,
-        [CHAR.OBERON]:false,
+        [CHAR.ASSASSIN]: false,
+        [CHAR.MORGANA]: false,
+        [CHAR.MERLIN]: false,
+        [CHAR.MORDRED]: false,
+        [CHAR.PERCIVAL]: false,
+        [CHAR.OBERON]: false,
       }
     },
     quests: {
