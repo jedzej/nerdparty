@@ -35,7 +35,6 @@ class StageConfigurationView extends React.Component {
       <div style={{ margin: 0, height: '100%' }}>
         <div style={{ margin: 0, overflow: 'auto', height: 'calc(100% - 56px)' }}>
           <Paper className={classes.paper}>
-
             <SpecialCharactersSelector />
             <Divider />
             <Button

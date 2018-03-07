@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
+import PlayArrow from 'material-ui-icons/PlayArrow';
 
 import MembersList from '../common/MembersList';
 import CharIcon from './CharIcon';
@@ -17,18 +18,25 @@ class CharactersList extends React.Component {
     const { store } = this.props.avaclone;
     const currentUser = this.props.user;
 
-    const hideAction = memberId => <CharIcon char={CHAR.GOOD} />
+    const youAction = memberId => memberId == currentUser._id ? 
+      <PlayArrow/> : null;
+    const hideAction = memberId => <CharIcon char={CHAR.GOOD} />;
 
     const exposeAction = memberId => {
       const char = currentUser._id === memberId ?
-        ac.get.char(store, memberId) : ac.get.charFor(store, currentUser._id, memberId)
-      return <CharIcon char={char} />;
+        ac.get.char(store, memberId) : ac.get.charFor(store, currentUser._id, memberId);
+      return <CharIcon char={char} style={{
+        color: ac.is.good(ac.get.charFor(store, currentUser._id, memberId)) ? 'green' : 'red'
+      }} />;
     }
 
     return (
       <MembersList
         caption={this.props.caption || ""}
-        actions={[this.props.expose ? exposeAction : hideAction]}
+        actions={[
+          youAction,
+          this.props.expose ? exposeAction : hideAction
+        ]}
       />
     );
   }

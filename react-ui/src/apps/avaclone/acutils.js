@@ -1,6 +1,6 @@
 const MANIFEST = require('./manifest');
 
-const { QUEST_STAGE, QUEST_MAP, VISIBILITY_MAP } = MANIFEST.CONSTS;
+const { QUEST_STAGE, QUEST_MAP, VISIBILITY_MAP, TEAM } = MANIFEST.CONSTS;
 
 const countIf = (arr, cond) => arr.reduce((s, e) => cond(e) ? s + 1 : s, 0);
 
@@ -71,6 +71,8 @@ const ac = {
   },
 
   is: {
+    good: (char) => TEAM.GOOD.includes(char),
+    evil: (char) => TEAM.EVIL.includes(char),
     inStage: (entity, stage) => (entity.stage === stage),
     notInStage: (entity, stage) => (entity.stage !== stage),
     squadMember: (quest, userId) =>
