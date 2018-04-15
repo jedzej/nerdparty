@@ -66,7 +66,9 @@ class ActionTip extends React.Component {
         case COMPLETE_CAUSE.ASSASSIN_KILLS_MERLIN:
           primary = isEvil ? 'you win!' : 'you lose!';
           secondary = 'minions of Mordred win by killing Merlin';
-          break
+          break;
+        default:
+          break;
       }
     }
 

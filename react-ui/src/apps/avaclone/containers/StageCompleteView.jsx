@@ -1,11 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import withStyles from 'material-ui/styles/withStyles';
-import {
-  Grid,
-  Button,
-  Paper
-} from 'material-ui';
+import { Grid, Button } from 'material-ui';
 
 import { terminate } from '../../../logic/app/actions';
 
@@ -19,9 +14,6 @@ import ac from '../acutils';
 function StageCompleteView(props) {
   const { store } = props.avaclone;
   const currentUser = props.user;
-
-  const failedCount = ac.sum.failedQuests(store);
-  const succeededCount = ac.sum.succeededQuests(store);
 
   return (
     <StageWrapper>

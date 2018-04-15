@@ -8,7 +8,7 @@ import CharIcon from './CharIcon';
 
 import MANIFEST from '../../manifest';
 
-const ac = require('../../acutils');
+import ac from '../../acutils';
 
 const { CHAR } = MANIFEST.CONSTS;
 
@@ -18,7 +18,7 @@ class CharactersList extends React.Component {
     const { store } = this.props.avaclone;
     const currentUser = this.props.user;
 
-    const youAction = memberId => memberId == currentUser._id ? 
+    const youAction = memberId => memberId === currentUser._id ? 
       <PlayArrow/> : null;
     const hideAction = memberId => <CharIcon char={CHAR.GOOD} />;
 
