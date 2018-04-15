@@ -31,7 +31,8 @@ const STAGE = {
   QUEST_SELECTION: "QUEST_SELECTION",
   SQUAD_PROPOSAL: "SQUAD_PROPOSAL",
   SQUAD_VOTING: "SQUAD_VOTING",
-  QUEST_VOTING: "QUEST_VOTING"
+  QUEST_VOTING: "QUEST_VOTING",
+  ASSASSIN_VOTING: "ASSASSIN_VOTING"
 };
 
 const QUEST_STAGE = {
@@ -39,6 +40,12 @@ const QUEST_STAGE = {
   ONGOING: "ONGOING",
   SUCCESS: "SUCCESS",
   FAILURE: "FAILURE"
+};
+
+const COMPLETE_CAUSE = {
+  ASSASSIN_KILLS_MERLIN: "ASSASSIN_KILLS_MERLIN",
+  MISSIONS_COMPLETED: "MISSIONS_COMPLETED",
+  MISSIONS_FAILED: "MISSIONS_FAILED"
 };
 
 const evilVisibilityMap = {
@@ -153,6 +160,7 @@ module.exports = {
     roundNumber: 0,
     playersOrder: [],
     charactersMap: {},
+    assassinVote: null,
     configuration: {
       squadVotingLimit: 3,
       squadProposalLimit: 0,
@@ -199,6 +207,7 @@ module.exports = {
     VISIBILITY_MAP,
     QUEST_STAGE,
     QUEST_MAP,
+    COMPLETE_CAUSE,
     ACTION: {
       APP_UPDATE_AVACLONE: "APP_UPDATE_AVACLONE",
       AVACLONE_START: "AVACLONE_START",
@@ -210,6 +219,7 @@ module.exports = {
       AVACLONE_SQUAD_CONFIRM: "AVACLONE_SQUAD_CONFIRM",
       AVACLONE_SQUAD_VOTE: "AVACLONE_SQUAD_VOTE",
       AVACLONE_QUEST_VOTE: "AVACLONE_QUEST_VOTE",
+      AVACLONE_ASSASSIN_VOTE: "AVACLONE_ASSASSIN_VOTE",
       AVACLONE_CLEAR: "AVACLONE_CLEAR",
     }
   }

@@ -225,7 +225,7 @@ const AVACLONE_APP_HANDLERS = {
 
     quest.squadVotes[currentUser._id] = action.payload.vote;
 
-    console.log("votes",ac.sum.successSquadVotes(quest), ac.get.playersCount(store))
+    console.log("votes", ac.sum.successSquadVotes(quest), ac.get.playersCount(store))
     if (ac.is.squadVoting.done(store, quest)) {
       // update voting history
       quest.votingHistory.push({
@@ -251,7 +251,7 @@ const AVACLONE_APP_HANDLERS = {
       quest.squadVotes = {};
     }
 
-    if (ac.is.completeConditionFulfilled(store)) {
+    if (ac.is.won.byEvil(store)) {
       store.stage = STAGE.COMPLETE;
     }
 
@@ -285,10 +285,36 @@ const AVACLONE_APP_HANDLERS = {
       store.stage = STAGE.QUEST_SELECTION;
     }
 
-    if (ac.is.completeConditionFulfilled(store)) {
+    console.log('now check')
+    if (ac.is.won.byGood(store)) {
+      console.log('is won by good')
+      if (store.configuration.specialChars[CHAR.ASSASSIN]) {
+        console.log('assassin voting')
+        store.stage = STAGE.ASSASSIN_VOTING;
+      }
+      else {
+        store.stage = STAGE.COMPLETE;
+      }
+
+    } else if (ac.is.won.byEvil(store)) {
+      console.log('is won by evil')
       store.stage = STAGE.COMPLETE;
     }
 
+    return appContext.commit()
+      .then(() => appContext.doAppUpdate());
+  },
+
+
+  [ACTION.AVACLONE_ASSASSIN_VOTE]: (action, appContext) => {
+    const { store, currentUser } = appContext;
+    if (ac.is.notInStage(store, STAGE.ASSASSIN_VOTING))
+      throw new Error("Invalid stage");
+    if (ac.get.char(store, currentUser._id) !== CHAR.ASSASSIN)
+      throw new Error("Not an assassin");
+
+    store.assassinVote = action.payload.merlinId
+    store.stage = STAGE.COMPLETE;
     return appContext.commit()
       .then(() => appContext.doAppUpdate());
   },

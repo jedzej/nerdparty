@@ -1,6 +1,14 @@
 const MANIFEST = require('./manifest');
 
-const { QUEST_STAGE, QUEST_MAP, VISIBILITY_MAP, TEAM } = MANIFEST.CONSTS;
+const {
+  QUEST_STAGE,
+  QUEST_MAP,
+  VISIBILITY_MAP,
+  TEAM,
+  LOYALITY_MAP,
+  CHAR,
+  COMPLETE_CAUSE
+} = MANIFEST.CONSTS;
 
 const countIf = (arr, cond) => arr.reduce((s, e) => cond(e) ? s + 1 : s, 0);
 
@@ -33,6 +41,10 @@ const ac = {
 
   get: {
     default: () => MANIFEST.DEFAULT_STORE,
+    assassin: (store, lobby) => lobby.members.find(
+      m => ac.get.char(store, m._id) === CHAR.ASSASSIN),
+    goodCount: (playersCount) => LOYALITY_MAP[playersCount].good,
+    evilCount: (playersCount) => LOYALITY_MAP[playersCount].evil,
     currentQuest: store => vals(store.quests).find(
       quest => quest.stage === QUEST_STAGE.ONGOING),
     members: (store, lobby) => store.playersOrder.map(
@@ -52,7 +64,11 @@ const ac = {
     squadAttemptsLimit: (store) => store.configuration.squadVotingLimit,
     char: (store, userId) => store.charactersMap[userId],
     charFor: (store, observerId, observedId) =>
-      VISIBILITY_MAP[ac.get.char(store, observerId)][ac.get.char(store, observedId)]
+      VISIBILITY_MAP[ac.get.char(store, observerId)][ac.get.char(store, observedId)],
+    completeCause: (store) =>
+      store.assassinVote && store.charactersMap[store.assassinVote] === CHAR.MERLIN ?
+        COMPLETE_CAUSE.ASSASSIN_KILLS_MERLIN : ac.is.won.byGood(store) ?
+          COMPLETE_CAUSE.MISSIONS_COMPLETED : COMPLETE_CAUSE.MISSIONS_FAILED
   },
 
   sum: {
@@ -65,9 +81,9 @@ const ac = {
     failureQuestVotes: quest =>
       countIf(vals(quest.questVotes), v => v === false),
     failedQuests: store =>
-      countIf(vals(store.quests), q => q.stage === QUEST_STAGE.SUCCESS),
-    succeededQuests: store =>
       countIf(vals(store.quests), q => q.stage === QUEST_STAGE.FAILURE),
+    succeededQuests: store =>
+      countIf(vals(store.quests), q => q.stage === QUEST_STAGE.SUCCESS),
   },
 
   is: {
@@ -80,8 +96,13 @@ const ac = {
     squadFull: (store, quest) =>
       (ac.get.squadCount(quest) === ac.get.squadCountRequired(store, quest)),
     commander: (store, userId) => idsEqual(ac.get.commanderId(store), userId),
+    assassin: (store, userId) => ac.get.char(store, userId) === CHAR.ASSASSIN,
+    won: {
+      byGood: store => ac.sum.succeededQuests(store) >= 3,
+      byEvil: store => ac.sum.failedQuests(store) >= 3,
+    },
     completeConditionFulfilled: store =>
-      (ac.sum.failedQuests(store) >= 3 || ac.sum.succeededQuests(store) >= 3),
+      ac.is.won.byGood(store) || ac.is.won.byEvil(store),
     quest: {
       taken: (quest) =>
         ac.is.notInStage(quest, QUEST_STAGE.NOT_TAKEN)

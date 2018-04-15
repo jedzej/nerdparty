@@ -13,6 +13,7 @@ import SpecialCharactersSelector from './configuration/SpecialCharactersSelector
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
 
+import ac from '../acutils'
 
 const styles = theme => ({
   paper: {
@@ -30,12 +31,15 @@ const styles = theme => ({
 class StageConfigurationView extends React.Component {
 
   render() {
-    const { classes } = this.props;
+    const { classes, user, lobby } = this.props;
     return (
       <div style={{ margin: 0, height: '100%' }}>
         <div style={{ margin: 0, overflow: 'auto', height: 'calc(100% - 56px)' }}>
           <Paper className={classes.paper}>
-            <SpecialCharactersSelector />
+            <SpecialCharactersSelector
+              disabled={user.isLeader === false}
+              evilLimit={ac.get.evilCount(lobby.members.length)}
+            />
             <Divider />
             <Button
               onClick={() => this.props.start()}
@@ -51,7 +55,8 @@ class StageConfigurationView extends React.Component {
 const mapStateToProps = (state) => {
   return {
     avaclone: state.avaclone,
-    user: state.user
+    user: state.user,
+    lobby: state.lobby
   };
 };
 

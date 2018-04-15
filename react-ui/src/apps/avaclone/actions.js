@@ -34,4 +34,7 @@ export const questVote = (vote) => ({
   payload: { vote }
 });
 
-
+export const assassinVote = (merlinId) => ({
+  type: ACTION.AVACLONE_ASSASSIN_VOTE,
+  payload: { merlinId }
+});

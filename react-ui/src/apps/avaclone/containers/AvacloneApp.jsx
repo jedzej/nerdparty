@@ -7,6 +7,7 @@ import StageSquadProposalView from './StageSquadProposalView';
 import StageSquadVotingView from './StageSquadVotingView';
 import StageQuestVotingView from './StageQuestVotingView';
 import StageCompleteView from './StageCompleteView';
+import StageAssassinVotingView from './StageAssassinVotingView';
 import MANIFEST from '../manifest'
 
 
@@ -26,6 +27,8 @@ class AvacloneApp extends React.Component {
         return <StageSquadVotingView />;
       case STAGE.QUEST_VOTING:
         return <StageQuestVotingView />;
+      case STAGE.ASSASSIN_VOTING:
+        return <StageAssassinVotingView />;
       case STAGE.COMPLETE:
         return <StageCompleteView />;
       default:

@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "node server",
-    "dev": "heroku local -f Procfile_dev",
+    "local": "heroku local -f Procfile_dev",
     "heroku-postbuild": "cd react-ui/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "cacheDirectories": [

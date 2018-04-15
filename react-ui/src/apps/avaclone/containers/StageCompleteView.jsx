@@ -1,116 +1,66 @@
 import React from 'react';
 import { connect } from "react-redux";
 import withStyles from 'material-ui/styles/withStyles';
+import {
+  Grid,
+  Button,
+  Paper
+} from 'material-ui';
 
 import { terminate } from '../../../logic/app/actions';
-import { logout } from '../../../logic/user/actions';
-import { leave } from '../../../logic/lobby/actions';
 
-import Button from 'material-ui/Button/Button';
-import Paper from 'material-ui/Paper/Paper';
-import Typography from 'material-ui/Typography/Typography';
+import StageWrapper from './StageWrapper';
+import MembersList from './common/MembersList';
+import CharIcon from './character/CharIcon';
 
-const ac = require('../acutils');
+import ac from '../acutils';
 
 
-const styles = theme => {
-  console.log(theme); return ({
-    root: {
-      flexGrow: 1,
-    },
-    paper: {
-      padding: theme.spacing.unit * 2,
-      height: '100%',
-    },
-    control: {
-      padding: theme.spacing.unit * 2,
-    },
-    headline: {
-      paddingBottom: theme.spacing.unit * 2
-    },
-    settingsButton: {
-      position: 'absolute',
-      top: '10px',
-      right: '10px'
-    },
-    undoButton: {
-      position: 'absolute',
-      bottom: '10px',
-      right: '50px'
-    },
-    undoButtonDisabled: {
-      position: 'absolute',
-      color: '#CCC',
-      bottom: '10px',
-      right: '50px'
-    },
-    clearButton: {
-      position: 'absolute',
-      bottom: '10px',
-      right: '90px'
-    },
-    paletteButton: {
-      position: 'absolute',
-      bottom: '10px',
-      right: '10px'
-    },
-    canvasContainer: {
-      width: '100%',
-      height: '100%',
-      overflow: 'hidden',
-      backgroundColor: '#fff'
-    }
-  })
-};
+function StageCompleteView(props) {
+  const { store } = props.avaclone;
+  const currentUser = props.user;
 
+  const failedCount = ac.sum.failedQuests(store);
+  const succeededCount = ac.sum.succeededQuests(store);
 
-class StageCompleteView extends React.Component {
-
-  render() {
-    const { store } = this.props.avaclone;
-    const currentUser = this.props.user;
-
-    const failedCount = ac.sum.failedQuests(store);
-    const succeededCount = ac.sum.succeededQuests(store);
-
-    return (
-      <Paper>
-        {failedCount > succeededCount ?
-          <Typography>Good win</Typography> :
-          <Typography>Evil win</Typography>
-        }
-        <Button
-          disabled={currentUser.isLeader === false}
-          onClick={() => this.props.terminate()}>
-          Terminate
-        </Button>
-      </Paper>
-    );
-  }
+  return (
+    <StageWrapper>
+      <MembersList
+        actions={[
+          (memberId) =>
+            <CharIcon
+              char={ac.get.char(store, memberId)}
+            />
+        ]}
+        caption={member => ac.get.char(store, member._id)}
+      />
+      <Grid container justify="center">
+        <Grid item xs={12} style={{ textAlign: 'center', paddingTop: '30px' }}>
+          <Button
+            raised
+            color="primary"
+            aria-label="terminate"
+            disabled={currentUser.isLeader === false}
+            onClick={() => props.terminate(true)}
+          >
+            TERMINATE
+          </Button>
+        </Grid>
+      </Grid>
+    </StageWrapper>
+  );
 }
 
 
-const mapStateToProps = (state) => {
-  return {
-    avaclone: state.avaclone,
-    lobby: state.lobby,
-    user: state.user
-  };
-};
+const mapStateToProps = (state) => ({
+  avaclone: state.avaclone,
+  lobby: state.lobby,
+  user: state.user
+});
 
 const mapDispatchToProps = (dispatch) => ({
-  terminate: () => {
-    dispatch(terminate());
-  },
-  logout: () => {
-    dispatch(logout());
-  },
-  leave: () => {
-    dispatch(leave())
-  }
+  terminate: () => dispatch(terminate())
 })
 
 
-export default withStyles(styles)(
-  connect(mapStateToProps, mapDispatchToProps)(StageCompleteView)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(StageCompleteView);

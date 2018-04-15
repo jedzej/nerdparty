@@ -13,6 +13,8 @@ import PersonOutline from 'material-ui-icons/PersonOutline';
 import _ from 'lodash';
 import Grid from 'material-ui/Grid/Grid';
 
+import ac from '../../acutils';
+
 const { TEAM } = MANIFEST.CONSTS;
 
 const styles = theme => ({
@@ -76,6 +78,10 @@ class SpecialCharactersSelector extends React.Component {
     const localConfig = this.props.avaclone.localConfiguration;
     const specialChars = Object.keys(localConfig.specialChars);
 
+    const evilLimitReached = () => specialChars.filter(c =>
+      ac.is.evil(c) && localConfig.specialChars[c]
+    ).length === this.props.evilLimit;
+
     const charCheckbox = char => (
       <FormControlLabel
         key={char}
@@ -83,6 +89,10 @@ class SpecialCharactersSelector extends React.Component {
           <Checkbox
             checked={localConfig.specialChars[char]}
             onChange={this.handleCheckboxChange(char)}
+            disabled={this.props.disabled
+              || (ac.is.evil(char)
+                && localConfig.specialChars[char] === false
+                && evilLimitReached())}
             value={char}
           />
         }
